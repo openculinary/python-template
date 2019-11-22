@@ -23,4 +23,3 @@ spec:
         name: python-template
         ports:
         - containerPort: 80
-  replicas: 1
