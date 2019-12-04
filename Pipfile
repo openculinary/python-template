@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Flask = "*"
-gunicorn = "*"
+Flask = "==1.1.1"
+gunicorn = "==20.0.4"
 
 [dev-packages]
 pytest = "*"
