@@ -15,10 +15,8 @@ spec:
         app: python-template
         role: web
     spec:
-      imagePullSecrets:
-      - name: gitlab-registry
       containers:
-      - image: registry.gitlab.com/openculinary/python-template
+      - image: registry.openculinary.org/reciperadar/python-template
         imagePullPolicy: IfNotPresent
         name: python-template
         ports:
