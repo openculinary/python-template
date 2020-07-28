@@ -20,7 +20,7 @@ image:
 	buildah copy $(container) 'Pipfile'
 	buildah run $(container) -- adduser -h /srv/ -s /sbin/nologin -G users -D -H -u 1000 gunicorn --
 	buildah run $(container) -- chown gunicorn /srv/ --
-	buildah run --user gunicorn $(container) -- pip install pipenv --
+	buildah run --user gunicorn $(container) -- pip install --user pipenv --
 	buildah run --user gunicorn $(container) -- /srv/.local/bin/pipenv install --skip-lock --
 	buildah config --port 8000 --user gunicorn --entrypoint '/srv/.local/bin/pipenv run gunicorn web.app:app --bind :8000' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
