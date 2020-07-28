@@ -20,7 +20,7 @@ image:
 	buildah copy $(container) 'Pipfile'
 	buildah run $(container) -- pip install pipenv --
 	buildah run $(container) -- pipenv install --
-	buildah config --port 80 --entrypoint 'pipenv run gunicorn web.app:app --bind :80' $(container)
+	buildah config --port 8000 --entrypoint 'pipenv run gunicorn web.app:app --bind :8000' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
 lint:
