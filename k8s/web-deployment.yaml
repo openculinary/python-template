@@ -21,3 +21,11 @@ spec:
         name: python-template
         ports:
         - containerPort: 80
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmpfs
+      volumes:
+      - name: tmpfs
+        emptyDir: {}
