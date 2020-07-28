@@ -18,7 +18,7 @@ image:
 	$(eval container=$(shell buildah from docker.io/library/python:3.8-alpine))
 	buildah copy $(container) 'web' 'web'
 	buildah copy $(container) 'Pipfile'
-	buildah run $(container) -- adduser -h /srv/ -s /sbin/nologin -G users -D -H -u 1000 gunicorn --
+	buildah run $(container) -- adduser -h /srv/ -s /sbin/nologin -G users -D -H gunicorn --
 	buildah run $(container) -- chown gunicorn /srv/ --
 	buildah run --user gunicorn $(container) -- pip install --user pipenv --
 	buildah run --user gunicorn $(container) -- /srv/.local/bin/pipenv install --skip-lock --
