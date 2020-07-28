@@ -18,9 +18,10 @@ image:
 	$(eval container=$(shell buildah from docker.io/library/python:3.8-alpine))
 	buildah copy $(container) 'web' 'web'
 	buildah copy $(container) 'Pipfile'
-	buildah run $(container) -- pip install pipenv --
-	buildah run $(container) -- pipenv install --
-	buildah config --port 8000 --entrypoint 'pipenv run gunicorn web.app:app --bind :8000' $(container)
+	buildah run $(container) -- chown guest /srv/ --
+	buildah run --user guest $(container) -- pip install --root /srv/ pipenv --
+	buildah run --user guest $(container) -- env HOME=/srv/ env PYTHONPATH=/srv/usr/local/lib/python3.8/site-packages /srv/usr/local/bin/pipenv install --skip-lock --
+	buildah config --port 8000 --user guest --entrypoint 'env HOME=/srv/ env PYTHONPATH=/srv/usr/local/lib/python3.8/site-packages /srv/usr/local/bin/pipenv run gunicorn web.app:app --bind :8000' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
 lint:
