@@ -22,11 +22,11 @@ image:
 	buildah run $(container) -- chown gunicorn /srv/ --
 	buildah run --user gunicorn $(container) -- pip install --user pipenv --
 	buildah run --user gunicorn $(container) -- /srv/.local/bin/pipenv install --skip-lock --
-# HACK: For rootless compatibility across podman and k8s environments, unset file ownership and grant read+exec to binaries
+	# Begin: HACK: For rootless compatibility across podman and k8s environments, unset file ownership and grant read+exec to binaries
 	buildah run $(container) -- chown -R nobody:nobody /srv/ --
 	buildah run $(container) -- chmod -R a+rx /srv/.local/bin/ --
 	buildah run $(container) -- find /srv/ -type d -exec chmod a+rx {} \;
-# END HACK
+	# End: HACK
 	buildah config --port 8000 --user gunicorn --entrypoint '/srv/.local/bin/pipenv run gunicorn web.app:app' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
