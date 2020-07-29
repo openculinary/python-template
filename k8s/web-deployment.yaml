@@ -20,4 +20,13 @@ spec:
         imagePullPolicy: IfNotPresent
         name: python-template
         ports:
-        - containerPort: 80
+        - containerPort: 8000
+        securityContext:
+          privileged: false
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmpfs
+      volumes:
+      - name: tmpfs
+        emptyDir: {}
