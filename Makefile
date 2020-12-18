@@ -29,8 +29,21 @@ image:
 	buildah config --port 8000 --user gunicorn --entrypoint '/srv/.local/bin/gunicorn web.app:app --bind :8000' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
-lint:
-	flake8
+venv: venv/bin/activate
+	venv/bin/pip install --requirement requirements-dev.txt
+	touch venv
 
-tests:
-	pytest tests
+venv/bin/activate:
+	test -d venv || virtualenv venv
+	venv/bin/pip install pip-tools
+	touch venv/bin/activate
+
+%.txt: venv %.in
+	venv/bin/pip-compile $@
+
+lint: venv
+	venv/bin/flake8 tests
+	venv/bin/flake8 web
+
+tests: venv
+	venv/bin/pytest tests
