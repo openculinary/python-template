@@ -39,7 +39,7 @@ venv/bin/activate:
 	touch venv/bin/activate
 
 %.txt: venv %.in
-	venv/bin/pip-compile $@
+	venv/bin/pip-compile --generate-hashes $@
 
 lint: venv
 	venv/bin/flake8 tests
