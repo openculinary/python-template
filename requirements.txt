@@ -58,6 +58,8 @@ werkzeug==1.0.1 \
     --hash=sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c \
     # via flask
 
-# WARNING: The following packages were not pinned, but pip requires them to be
-# pinned when the requirements file includes hashes. Consider using the --allow-unsafe flag.
-# setuptools
+# The following packages are considered to be unsafe in a requirements file:
+setuptools==51.0.0 \
+    --hash=sha256:029c49fd713e9230f6a41c0298e6e1f5839f2cde7104c0ad5e053a37777e7688 \
+    --hash=sha256:8c177936215945c9a37ef809ada0fab365191952f7a123618432bbfac353c529 \
+    # via gunicorn
