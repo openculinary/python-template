@@ -29,17 +29,19 @@ image:
 	buildah config --cmd '/srv/.local/bin/gunicorn web.app:app --bind :8000' --port 8000 --user gunicorn $(container)
 	buildah commit --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
-venv: venv/bin/activate
+venv: venv/bin/activate requirements.txt requirements-dev.txt
 	venv/bin/pip install --requirement requirements-dev.txt
 	touch venv
-
 venv/bin/activate:
 	test -d venv || virtualenv venv
 	venv/bin/pip install pip-tools
 	touch venv/bin/activate
 
-%.txt: venv %.in
-	venv/bin/pip-compile --generate-hashes $@
+requirements.txt: requirements.in
+	venv/bin/pip-compile --generate-hashes requirements.in
+
+requirements-dev.txt: requirements-dev.in
+	venv/bin/pip-compile --generate-hashes requirements-dev.in
 
 lint: venv
 	venv/bin/flake8 tests
