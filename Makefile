@@ -26,8 +26,8 @@ image:
 	buildah run $(container) -- chmod -R a+rx /srv/.local/bin/ --
 	buildah run $(container) -- find /srv/ -type d -exec chmod a+rx {} \;
 	# End: HACK
-	buildah config --port 8000 --user gunicorn --cmd '/srv/.local/bin/gunicorn web.app:app --bind :8000' $(container)
-	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
+	buildah config --cmd '/srv/.local/bin/gunicorn web.app:app --bind :8000' --port 8000 --user gunicorn $(container)
+	buildah commit --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
 venv: venv/bin/activate
 	venv/bin/pip install --requirement requirements-dev.txt
