@@ -29,13 +29,14 @@ image:
 	buildah config --cmd '/srv/.local/bin/gunicorn web.app:app --bind :8000' --port 8000 --user gunicorn $(container)
 	buildah commit --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
-venv: venv/bin/activate requirements.txt requirements-dev.txt
+# Virtualenv Makefile pattern derived from https://github.com/bottlepy/bottle/
+venv: venv/.installed requirements.txt requirements-dev.txt
 	venv/bin/pip install --requirement requirements-dev.txt
 	touch venv
-venv/bin/activate:
-	test -d venv || virtualenv venv
+venv/.installed:
+	python3 -m venv venv
 	venv/bin/pip install pip-tools
-	touch venv/bin/activate
+	touch venv/.installed
 
 requirements.txt: requirements.in
 	venv/bin/pip-compile --allow-unsafe --generate-hashes --no-header requirements.in
