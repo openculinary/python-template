@@ -20,7 +20,7 @@ image:
 	buildah copy $(container) 'requirements.txt'
 	buildah run $(container) -- adduser -h /srv/ -s /sbin/nologin -D -H gunicorn --
 	buildah run $(container) -- chown gunicorn /srv/ --
-	buildah run --user gunicorn $(container) -- pip install --requirement requirements.txt --user --
+	buildah run --user gunicorn $(container) -- pip install --no-warn-script-location --requirement requirements.txt --user --
 	# Begin: HACK: For rootless compatibility across podman and k8s environments, unset file ownership and grant read+exec to binaries
 	buildah run $(container) -- chown -R nobody:nobody /srv/ --
 	buildah run $(container) -- chmod -R a+rx /srv/.local/bin/ --
