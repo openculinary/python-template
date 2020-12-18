@@ -38,10 +38,10 @@ venv/bin/activate:
 	touch venv/bin/activate
 
 requirements.txt: requirements.in
-	venv/bin/pip-compile --generate-hashes requirements.in
+	venv/bin/pip-compile --generate-hashes --no-header requirements.in
 
 requirements-dev.txt: requirements-dev.in
-	venv/bin/pip-compile --generate-hashes requirements-dev.in
+	venv/bin/pip-compile --generate-hashes --no-header requirements-dev.in
 
 lint: venv
 	venv/bin/flake8 tests
