@@ -7,6 +7,7 @@ flask==1.1.2 \
     --hash=sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557
     # via -r requirements.in
 gunicorn==20.1.0 \
+    --hash=sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e \
     --hash=sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8
     # via -r requirements.in
 itsdangerous==1.1.0 \
@@ -77,7 +78,7 @@ werkzeug==1.0.1 \
     # via flask
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==54.2.0 \
-    --hash=sha256:aa9c24fb83a9116b8d425e53bec24c7bfdbffc313c2159f9ed036d4a6dd32d7d \
-    --hash=sha256:b726461910b9ba30f077880c228bea22121aec50b172edf39eb7ff026c054a11
+setuptools==56.2.0 \
+    --hash=sha256:7bb5652625e94e73b9358b7ed8c6431b732e80cf31f4e0972294c64f0e5b849e \
+    --hash=sha256:bc30153eec47d82f20c6f5e1a13d4ee725c6deb7013a67557f89bfe5d25235c4
     # via gunicorn
